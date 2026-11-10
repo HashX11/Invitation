@@ -4,11 +4,10 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temp=path.join(root,'.sites-runtime/guest-export');mkdirSync(temp,{recursive:true});
-const mime={'.webp':'image/webp','.png':'image/png','.svg':'image/svg+xml','.mp3':'audio/mpeg','.ttf':'font/ttf','.woff2':'font/woff2','.ics':'text/calendar;charset=utf-8','.css':'text/css'};
+const mime={'.webp':'image/webp','.png':'image/png','.svg':'image/svg+xml','.mp3':'audio/mpeg','.ttf':'font/ttf','.woff2':'font/woff2','.css':'text/css'};
 const data=p=>'data:'+(mime[path.extname(p)]||'application/octet-stream')+';base64,'+readFileSync(p).toString('base64');
 let source=readFileSync(path.join(root,'app/page.tsx'),'utf8');
 for(const name of readdirSync(path.join(root,'public/assets'))){const p=path.join(root,'public/assets',name);if(statSync(p).isFile())source=source.split('/assets/'+name).join(data(p));}
-source=source.replace('href="/wedding.ics" download="sameh-zeina.ics"','href="'+data(path.join(root,'public/wedding.ics'))+'" download="sameh-zeina.ics"');
 writeFileSync(path.join(temp,'Invitation.tsx'),source);
 writeFileSync(path.join(temp,'main.tsx'),'import React from "react";import {createRoot} from "react-dom/client";import Home from "./Invitation";createRoot(document.getElementById("root")!).render(React.createElement(Home));');
 let css=readFileSync(path.join(root,'app/globals.css'),'utf8').replace("@import url('/assets/fonts.css');",readFileSync(path.join(root,'public/assets/fonts.css'),'utf8'));
@@ -16,5 +15,6 @@ css=css.replace(/url\(['"]?(\/assets\/[^)'"\s]+)['"]?\)/g,(_,p)=>'url("'+data(pa
 const result=await build({configFile:false,root:temp,publicDir:false,define:{'process.env.NODE_ENV':'"production"'},oxc:{jsx:{runtime:'automatic'}},build:{write:false,minify:true,sourcemap:false,lib:{entry:path.join(temp,'main.tsx'),name:'WeddingInvitation',formats:['iife']}}});
 const outputs=(Array.isArray(result)?result:[result]).flatMap(r=>r.output);
 const code=outputs.filter(o=>o.type==='chunk').map(o=>o.code).join('\n').replace(/<\/script/gi,'<\\/script');
-const html=`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d8deca"><title>سامح وزينة — دعوة إلى عقد قران</title><meta name="description" content="دعوة سامح القاضي وزينة بكري، ١٦ نوفمبر ٢٠٢٦، الساعة السادسة مساءً، أكواريوس توريستيك ريزورت، المنية، لبنان."><style>${css}</style></head><body><div id="root"></div><script>${code}</script></body></html>`;
+const html=`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d8deca"><title>دعوة لحضور حفل وليمة عقد قران – سامح وزينة</title><meta name="description" content="دعوة لحضور حفل وليمة عقد قران سامح القاضي وزينة بكري، 16 تشرين الثاني 2026، الساعة 18:00، أكواريوس توريستيك ريزورت، المنية، لبنان."><style>${css}</style></head><body><div id="root"></div><script>${code}</script></body></html>`;
 const destination=root;writeFileSync(path.join(destination,'index.html'),html);console.log(JSON.stringify({file:path.join(destination,'index.html'),bytes:Buffer.byteLength(html),externalAssets:/\/(assets|wedding\.ics)/.test(html)}));
+
