@@ -2,15 +2,5 @@
   "name": "sameh-zeina-invitation",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build": "node scripts/export-public.mjs"
-  },
-  "dependencies": {
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
-  },
-  "devDependencies": {
-    "typescript": "5.9.3",
-    "vite": "8.0.13"
-  }
+  "scripts": {"build": "node --check script.js"}
 }
