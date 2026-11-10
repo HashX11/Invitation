@@ -9,8 +9,8 @@
   <meta property="og:description" content="بحضوركم تكتمل فرحتنا — الإثنين ١٦ تشرين الثاني ٢٠٢٦">
   <meta property="og:image" content="public/assets/garden.webp">
   <title>سامح وزينة | دعوة عقد القران</title>
-  <link rel="preload" href="public/assets/garden.webp" as="image">
-  <link rel="preload" href="public/assets/cover-portrait-v2.webp" as="image">
+  
+  
   <link rel="stylesheet" href="public/assets/fonts.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -18,55 +18,22 @@
   <audio id="music" src="public/assets/original-music.mp3" loop preload="none"></audio>
   <button id="musicToggle" class="music-toggle" type="button" aria-label="تشغيل الموسيقى" aria-pressed="false" title="الموسيقى"><span class="music-bars"><i></i><i></i><i></i><i></i></span></button>
 
-  <div id="intro" class="intro">
-    <div class="intro-glow"></div>
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-back"></div>
-      <div class="flap"></div>
-      <div class="letter">
-        <span class="letter-kicker">دعوة لحضور حفل<br>وليمة عقد قران</span>
-        <span class="letter-names">سامح <em>و</em> زينة</span>
-        <span class="letter-date" dir="ltr">16 · 11 · 2026</span>
-      </div>
-      <div class="envelope-pocket"></div>
-    </div>
-    <div class="portal" aria-hidden="true"></div>
-    <button id="seal" class="seal" type="button" aria-label="افتح الدعوة"><span>س <b>✦</b> ز</span></button>
-    <button id="openPrompt" class="open-prompt" type="button">اضغط لفتح الدعوة <span>✦</span></button>
-    <p class="intro-caption">رسالة من سامح وزينة إليكم</p>
+  <div id="intro" class="cinema">
+    <video id="letterFilm" muted playsinline preload="auto" poster="public/cinema/letter.jpg" src="public/cinema/letter.mp4"></video>
+    <div class="address"><span>دعوة عقد قران</span><h1>سامح وزينة</h1><time dir="ltr">16 · 11 · 2026</time></div>
+    <button id="openLetter" aria-label="افتح الرسالة"><span>المس الختم لفتح الرسالة</span></button>
   </div>
-
   <main id="chapters" inert aria-hidden="true">
-    <section class="garden-world" id="garden" aria-label="حديقة سامح وزينة">
-      <div class="scene scene-base"></div>
-      <div class="scene scene-canopy"></div>
-      <div class="scene scene-sides"></div>
-      <div class="scene scene-foreground"></div>
-      <div class="garden-light"></div>
-      <svg class="fountain" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs><linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff8df" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fffaf0" stop-opacity=".75"/></linearGradient></defs>
-        <g id="upperJets"></g><g id="lowerJets"></g>
-        <path class="crown-jet" d="M772 644 C770 625 770 608 772 596 M767 643 C759 621 752 616 741 625 M777 643 C786 620 794 615 804 626"/>
-        <ellipse class="bowl-shimmer" cx="772" cy="742" rx="92" ry="8"/>
-        <ellipse class="ripple" cx="772" cy="849" rx="118" ry="12"/>
-        <ellipse class="ripple late" cx="772" cy="849" rx="118" ry="12"/>
-      </svg>
-      <div class="birds" aria-hidden="true"></div>
-      <div class="glimmers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hero-copy">
-        <p class="eyebrow">دعوة لحضور حفل<br>وليمة عقد قران</p>
-        <h1>سامح <em>و</em> زينة</h1>
-        <span class="ornament" aria-hidden="true">⌁ ✦ ⌁</span>
-        <time datetime="2026-11-16" dir="ltr">16 · 11 · 2026</time>
-      </div>
-      <a class="scroll-hint" href="#verse" aria-label="تابع تفاصيل الدعوة"><span>مرّر لاكتشاف دعوتنا</span><b>↓</b></a>
+    <section class="rose-world" id="garden">
+      <video id="gardenFilm" muted playsinline preload="auto" src="public/cinema/garden.mp4"></video>
+      <div class="rose-title"><p>وليمة عقد قران</p><h1>سامح <em>و</em> زينة</h1><time dir="ltr">16 · 11 · 2026</time></div>
+      <a class="continue" href="#verse">تفاصيل الدعوة ↓</a>
     </section>
-
     <div class="petal-divider" aria-hidden="true"><span>✦</span><i></i><i></i><i></i></div>
     <section id="verse" class="verse section-paper">
       <div class="leaf-corner top-right" aria-hidden="true"></div><div class="leaf-corner bottom-left" aria-hidden="true"></div>
       <div class="section-inner reveal">
-        <span class="section-number">01 / مباركة البداية</span>
+        
         <p class="bismillah">بسم الله الرحمن الرحيم</p>
         <span class="ornament" aria-hidden="true">⌁ ✦ ⌁</span>
         <p class="verse-text">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾</p>
@@ -77,7 +44,7 @@
     <section class="invitation section-cream" id="invitation">
       <div class="floating-sprig sprig-one" aria-hidden="true">❦</div><div class="floating-sprig sprig-two" aria-hidden="true">❦</div>
       <div class="section-inner">
-        <span class="section-number reveal">02 / فرحتنا بكم</span>
+        
         <p class="invitation-label reveal">بدعوة كريمة من</p>
         <div class="families reveal"><p>السيدة ندى مرقباوي<small>والدة العريس</small></p><span>✦</span><p>السيدة ابتسام الأحمد<small>والدة العروس</small></p></div>
         <span class="ornament reveal" aria-hidden="true">⌁ ✦ ⌁</span>
@@ -94,7 +61,7 @@
 
     <section class="event section-paper" id="event">
       <div class="section-inner">
-        <span class="section-number reveal">03 / موعد اللقاء</span>
+        
         <p class="event-day reveal">الإثنين</p>
         <div class="date-row reveal"><strong>16</strong><span>تشرين<br>الثاني</span><strong>2026</strong></div>
         <p class="event-time reveal">الساعة السادسة مساءً <span dir="ltr">18:00</span></p>
@@ -110,7 +77,7 @@
       </div>
     </section>
 
-    <section class="prayer section-cream"><div class="section-inner reveal"><span class="section-number">04 / دعوة من القلب</span><p class="prayer-intro">ولا تنسونا من صالح دعائكم، وقولوا معنا:</p><span class="ornament" aria-hidden="true">⌁ ✦ ⌁</span><p class="verse-text">﴿ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا ﴾</p><p class="citation">سورة الفرقان – ٧٤</p></div></section>
+    <section class="prayer section-cream"><div class="section-inner reveal"><p class="prayer-intro">ولا تنسونا من صالح دعائكم، وقولوا معنا:</p><span class="ornament" aria-hidden="true">⌁ ✦ ⌁</span><p class="verse-text">﴿ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا ﴾</p><p class="citation">سورة الفرقان – ٧٤</p></div></section>
     <footer><span class="ornament" aria-hidden="true">⌁ ✦ ⌁</span><p>بحضوركم تكتمل فرحتنا</p><small>سامح  ·  زينة</small></footer>
   </main>
   <script src="script.js" defer></script>
