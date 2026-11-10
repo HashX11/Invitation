@@ -26,12 +26,17 @@ export default function Home() {
   const [opened, setOpened] = useState(false);
   const [entered, setEntered] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [guest, setGuest] = useState("");
+  const [remaining, setRemaining] = useState(0);
   const audio = useRef<HTMLAudioElement>(null);
   const world = useRef<HTMLElement>(null);
 
-  useEffect(() => { setGuest(new URLSearchParams(location.search).get("to")?.trim().slice(0, 120) || ""); }, []);
   useEffect(() => { document.body.classList.toggle("letter-closed", !entered); return () => document.body.classList.remove("letter-closed"); }, [entered]);
+  useEffect(() => {
+    const tick = () => setRemaining(Math.max(0, Math.floor((new Date("2026-11-16T16:00:00Z").getTime() - Date.now()) / 1000)));
+    tick();
+    const timer = window.setInterval(tick, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
   useEffect(() => {
     const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }), { threshold: .12 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
@@ -45,24 +50,31 @@ export default function Home() {
   }, []);
 
   const play = () => { if (!audio.current) return; audio.current.volume = .7; void audio.current.play().catch(() => setPlaying(false)); };
-  const open = () => { if (opened) return; setOpened(true); play(); setTimeout(() => setEntered(true), 1450); };
+  const open = () => { if (opened) return; setOpened(true); play(); setTimeout(() => setEntered(true), 1800); };
+  const countdown = [
+    [Math.floor(remaining / 86400), "يوم"],
+    [Math.floor(remaining % 86400 / 3600), "ساعة"],
+    [Math.floor(remaining % 3600 / 60), "دقيقة"],
+    [remaining % 60, "ثانية"],
+  ] as const;
   return <main className={`experience ${opened ? "opening" : ""} ${entered ? "entered" : ""}`}>
     <audio ref={audio} src="/assets/original-music.mp3" preload="none" loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
-    <button className="music" onClick={() => playing ? audio.current?.pause() : play()} aria-label={playing ? "إيقاف الموسيقى" : "تشغيل الموسيقى"} aria-pressed={playing}><span className={playing ? "music-bars active" : "music-bars"}><i/><i/><i/><i/></span>{playing ? "إيقاف الموسيقى" : "تشغيل الموسيقى"}</button>
+    <button className="music" onClick={() => playing ? audio.current?.pause() : play()} aria-label={playing ? "إيقاف الموسيقى" : "تشغيل الموسيقى"} aria-pressed={playing}><span className={playing ? "music-bars active" : "music-bars"}><i/><i/><i/><i/></span></button>
     {!entered && <div className="intro">
       <div className="envelope-back" aria-hidden="true" />
-      <div className="letter"><div className="letter-edge"/><p>بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ</p><Flourish className="letter-flourish"/><span className="letter-label">دعوة إلى عقد قران</span><h1>سامح <em>و</em> زينة</h1><time dir="ltr">16 · 11 · 2026</time></div>
+      <div className="letter"><div className="letter-edge"/><Flourish className="letter-flourish"/><span className="letter-label">دعوة لحضور حفل<br/>وليمة عقد قران</span><h1>سامح <em>و</em> زينة</h1><time dir="ltr">16 · 11 · 2026</time></div>
       <div className="envelope-front" aria-hidden="true" />
-      <button className="seal" onClick={open} disabled={opened} aria-label="افتح الدعوة"><span>س <i>✦</i> ز<small>افتح الدعوة</small></span></button>
-      <button className="open-prompt" onClick={open} disabled={opened}>المس الختم لتبدأ الحكاية <span aria-hidden="true">↟</span></button>
+      <div className="garden-portal" aria-hidden="true" />
+      <button className="seal" onClick={open} disabled={opened} aria-label="اضغط لفتح الدعوة"><span>س <i>✦</i> ز</span></button>
+      <button className="open-prompt" onClick={open} disabled={opened}>اضغط لفتح الدعوة <span aria-hidden="true">↟</span></button>
     </div>}
     <div className="chapters" aria-hidden={!entered} inert={!entered}>
-      <section className="world" ref={world}><div className="garden garden-back"/><div className="garden garden-left"/><div className="garden garden-right"/><div className="garden garden-front"/><div className="world-wash"/><Fountain/><Birds/><div className="fireflies" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i}/>)}</div><div className="world-title"><p>في حديقةٍ من الفرح</p><h2>سامح <em>و</em> زينة</h2><Flourish/><span>يجمعهما وعدٌ، وتزهر حولهما الحكاية</span></div><a href="#scripture" className="scroll-cue">اكتشف الدعوة <i/></a></section>
-      <section className="scripture" id="scripture" dir="rtl"><div className="scripture-paper"><p className="scripture-label reveal">آية المودّة</p><Flourish className="reveal"/><p className="scripture-text reveal">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾</p><p className="surah reveal">سورة الروم · الآية ٢١</p></div></section>
-      <section className="story" id="invitation" dir="rtl"><p className="index reveal" dir="ltr">01 / THE INVITATION</p><p className="verse reveal">بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ</p><Flourish className="reveal"/>{guest && <p className="guest reveal">دعوة خاصة إلى <strong>{guest}</strong></p>}<p className="small reveal">بكل محبة وسرور، تتشرف</p><div className="parents reveal"><p><small>والدة العريس</small>السيدة ندى مرقباوي</p><i>✦</i><p><small>والدة العروس</small>السيدة ابتسام الأحمد</p></div><p className="small reveal">بدعوتكم لمشاركتنا فرحة عقد قران</p><h2 className="names reveal"><span>سامح <small>القاضي</small></span><em>و</em><span>زينة <small>بكري</small></span></h2><p className="father reveal">زينة، كريمة المرحوم سمير بكري، رحمه الله</p><p className="closing reveal">بحضوركم تكتمل فرحتنا</p></section>
-      <section className="details" dir="rtl"><p className="index reveal" dir="ltr">02 / THE CELEBRATION</p><p className="details-intro reveal">ننتظركم يوم الإثنين</p><h2 className="date reveal"><span>16</span><em>نوفمبر</em><span>2026</span></h2><p className="time reveal">الساعة السادسة مساءً</p><Flourish className="reveal"/><p className="venue reveal">أكواريوس توريستيك ريزورت</p><p className="location reveal">المنية، لبنان</p><div className="actions reveal"><a href="https://maps.app.goo.gl/Dc7q4NEhz87pzo817" target="_blank" rel="noopener noreferrer">اتجاهات المكان <span aria-hidden="true">↗</span></a></div></section>
-      <section className="prayer" dir="rtl"><p className="prayer-intro reveal">ولا تنسونا من صالح دعائكم</p><Flourish className="reveal"/><p className="prayer-text reveal">﴿ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا ﴾</p><p className="surah reveal">سورة الفرقان · الآية ٧٤</p></section>
-      <footer className="footer" dir="rtl"><p>الحمد لله الذي بنعمته تتم الصالحات</p><Flourish/><strong>سامح <em>و</em> زينة</strong><small>16 . 11 . 2026</small></footer>
+      <section className="world" ref={world}><div className="garden garden-back"/><div className="garden garden-left"/><div className="garden garden-right"/><div className="garden garden-front"/><div className="world-wash"/><Fountain/><Birds/><div className="fireflies" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i}/>)}</div><div className="world-title"><p>دعوة لحضور حفل<br/>وليمة عقد قران</p><h2>سامح <em>و</em> زينة</h2><Flourish/><span dir="ltr">16 · 11 · 2026</span></div><a href="#scripture" className="scroll-cue" aria-label="تابع الدعوة">↓</a></section>
+      <section className="scripture" id="scripture" dir="rtl"><div className="scripture-paper"><p className="scripture-label reveal">بسم الله الرحمن الرحيم</p><Flourish className="reveal"/><p className="scripture-text reveal">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾</p><p className="surah reveal">سورة الروم – ٢١</p></div></section>
+      <section className="story" id="invitation" dir="rtl"><p className="small reveal">بدعوة كريمة من</p><div className="parents reveal"><p>السيدة ندى مرقباوي<small>والدة العريس</small></p><i>✦</i><p>السيدة ابتسام الأحمد<small>والدة العروس</small></p></div><Flourish className="reveal"/><p className="heartfelt reveal">إلى كلِّ مَن مرَّ في حياتِنا فترك فيها أثراً لا يُنسى، وإلى كلِّ قلبٍ دعا لنا في الغيب،<br/>لا تكتمل فرحتُنا إلّا بوجودكم بيننا. <span>♥</span></p><div className="invitation-copy reveal"><p>نتشرف بدعوتكم لحضور حفل وليمة عقد قران</p><p>الشاب</p><h2>سامح القاضي</h2><p>على الآنسة</p><h2>زينة بكري</h2><p>كريمة المرحوم سمير بكري، رحمه الله</p><Flourish/><p>وذلك شكراً لله تعالى على فضل عقد هذا القران</p></div></section>
+      <section className="details" dir="rtl"><p className="details-intro reveal">الإثنين</p><h2 className="date reveal"><span>16</span><em>تشرين الثاني</em><span>2026</span></h2><p className="time reveal">الساعة 18:00 مساءً</p><Flourish className="reveal"/><p className="venue reveal">أكواريوس توريستيك ريزورت – المنية، لبنان</p><div className="countdown reveal"><p>العدّ التنازلي ليومنا</p><div>{countdown.map(([value, label]) => <span key={label}><strong>{String(value).padStart(2, "0")}</strong><small>{label}</small></span>)}</div></div><div className="actions reveal"><a href="https://maps.app.goo.gl/Dc7q4NEhz87pzo817" target="_blank" rel="noopener noreferrer">Google Maps <span aria-hidden="true">↗</span></a></div></section>
+      <section className="prayer" dir="rtl"><p className="prayer-intro reveal">ولا تنسونا من صالح دعائكم، وقولوا معنا:</p><Flourish className="reveal"/><p className="prayer-text reveal">﴿ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا ﴾</p><p className="surah reveal">سورة الفرقان – ٧٤</p></section>
+      <footer className="footer" dir="rtl"><Flourish/><strong>بحضوركم تكتمل فرحتنا</strong></footer>
     </div>
   </main>;
 }
