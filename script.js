@@ -14,8 +14,19 @@ musicToggle.addEventListener('click', () => {
   else audio.pause();
 });
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function openInvitation() {
+// Always reveal the fountain, including after Safari restores a previous scroll.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+function showFountainTop() {
+  window.scrollTo({top:0, left:0, behavior:'instant'});
+  document.getElementById('garden').style.setProperty('--scroll', '0');
+}
+window.addEventListener('pageshow', () => {
+  if (document.body.classList.contains('locked')) showFountainTop();
+});
+function openInvitation(event) {
   if (intro.classList.contains('unfold')) return;
+  event.currentTarget.blur();
+  showFountainTop();
   audio.play().catch(() => setMusicState(false));
   intro.classList.add('unfold');
   chapters.removeAttribute('inert');
@@ -23,11 +34,15 @@ function openInvitation() {
   setTimeout(() => {
     chapters.classList.add('entered');
     intro.classList.add('dissolve');
-    setTimeout(() => intro.remove(), 660);
+    setTimeout(() => {
+      intro.remove();
+      showFountainTop();
+    }, 660);
   }, reduced ? 0 : 1150);
   setTimeout(() => {
     chapters.classList.add('settled');
     document.body.classList.remove('locked');
+    showFountainTop();
   }, reduced ? 10 : 3300);
 }
 document.querySelectorAll('#openLetter, #openPrompt').forEach(button => {
