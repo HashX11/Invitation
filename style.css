@@ -89,3 +89,15 @@ main,.cinema{max-width:600px;margin-inline:auto;background:#fff9f2;box-shadow:0 
 @keyframes gardenDrift{0%{transform:translate3d(0,0,0) rotate(0);opacity:0}10%{opacity:.55}45%{transform:translate3d(-24px,46svh,0) rotate(140deg);opacity:.4}80%{opacity:.5}100%{transform:translate3d(38px,110svh,0) rotate(310deg);opacity:0}}
 @media(max-width:650px){.invitation{padding-bottom:12px}}
 @media(prefers-reduced-motion:reduce){.garden-drift{display:none}.roses{animation:none}}
+
+/* Complementary paper silhouettes part around the original envelope fold. */
+.paper-body{clip-path:polygon(0 37%,50% 59%,100% 37%,100% 100%,0 100%);transition:none;will-change:transform,opacity}
+.paper-hinge{transition:none;transform-origin:50% 0;will-change:transform,opacity;filter:drop-shadow(0 5px 5px #54372830)}
+.paper-face{backface-visibility:hidden}
+.cinema.opening{pointer-events:none}
+.cinema.opening .address,.cinema.opening button{transition:none}
+.camera{transform:scale(1.12)}
+.entered .camera{transition:none}
+@media(prefers-reduced-motion:reduce){.camera{transform:none}}
+
+.rose-title,.continue{transition:none}

@@ -23,27 +23,51 @@ function showFountainTop() {
 window.addEventListener('pageshow', () => {
   if (document.body.classList.contains('locked')) showFountainTop();
 });
-function openInvitation(event) {
-  if (intro.classList.contains('unfold')) return;
+async function openInvitation(event) {
+  if (intro.classList.contains('opening')) return;
   event.currentTarget.blur();
   showFountainTop();
   audio.play().catch(() => setMusicState(false));
-  intro.classList.add('unfold');
+  intro.classList.add('opening');
   chapters.removeAttribute('inert');
-  chapters.setAttribute('aria-hidden','false');
-  setTimeout(() => {
-    chapters.classList.add('entered');
-    intro.classList.add('dissolve');
-    setTimeout(() => {
-      intro.remove();
-      showFountainTop();
-    }, 660);
-  }, reduced ? 0 : 1150);
-  setTimeout(() => {
-    chapters.classList.add('settled');
-    document.body.classList.remove('locked');
-    showFountainTop();
-  }, reduced ? 10 : 3300);
+  chapters.setAttribute('aria-hidden', 'false');
+  // One synchronized timeline: release the wax, part the paper, enter the garden.
+  const animations = [];
+  function motion(selector, frames, duration, delay = 0, easing = 'cubic-bezier(.22,.61,.36,1)') {
+    const element = document.querySelector(selector);
+    const animation = element.animate(frames, {
+      duration: reduced ? 1 : duration, delay: reduced ? 0 : delay,
+      easing, fill: 'both'
+    });
+    animations.push(animation);
+    return animation;
+  }
+  motion('.wax', [
+    {transform:'rotate(-7deg) scale(1)', opacity:1},
+    {transform:'rotate(2deg) scale(1.08)', opacity:1, offset:.4},
+    {transform:'rotate(-12deg) scale(.88)', opacity:0}
+  ], 560);
+  motion('#openPrompt', [{opacity:1}, {opacity:0}], 300);
+  motion('.address', [{opacity:1, transform:'translateY(0)'}, {opacity:0, transform:'translateY(-14px)'}], 700, 120);
+  motion('.paper-hinge', [
+    {transform:'translateY(0) rotateX(0deg)', opacity:1},
+    {transform:'translateY(-18%) rotateX(48deg)', opacity:1, offset:.62},
+    {transform:'translateY(-42%) rotateX(72deg)', opacity:0}
+  ], 2200, 280);
+  motion('.paper-body', [
+    {transform:'translateY(0)', opacity:1},
+    {transform:'translateY(24%)', opacity:1, offset:.55},
+    {transform:'translateY(70%)', opacity:0}
+  ], 2300, 350);
+  motion('.camera', [{transform:'scale(1.12)'}, {transform:'scale(1.015)'}], 3300, 200);
+  motion('.rose-title', [{opacity:0, transform:'translateY(18px)'}, {opacity:1, transform:'translateY(0)'}], 1200, 1500);
+  motion('.continue', [{opacity:0, transform:'translateY(10px)'}, {opacity:1, transform:'translateY(0)'}], 900, 2100);
+  await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+  chapters.classList.add('entered', 'settled');
+  intro.remove();
+  animations.forEach(animation => animation.cancel());
+  document.body.classList.remove('locked');
+  showFountainTop();
 }
 document.querySelectorAll('#openLetter, #openPrompt').forEach(button => {
   button.addEventListener('click', openInvitation, {once:true});
