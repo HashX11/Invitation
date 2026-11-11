@@ -13,32 +13,21 @@ musicToggle.addEventListener('click', () => {
   if (audio.paused) audio.play().catch(() => setMusicState(false));
   else audio.pause();
 });
-const letter = document.querySelector('#letterFilm');
-const garden = document.querySelector('#gardenFilm');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.querySelector('#openLetter').addEventListener('click', async () => {
-  intro.classList.add('unfold');
+document.querySelector('#openLetter').addEventListener('click', () => {
   audio.play().catch(() => setMusicState(false));
-  if (!reduced) {
-    await new Promise(resolve => {
-      letter.onended = resolve;
-      letter.play().catch(resolve);
-      setTimeout(resolve, 4700);
-    });
-  }
+  intro.classList.add('unfold');
   chapters.removeAttribute('inert');
   chapters.setAttribute('aria-hidden','false');
-  chapters.classList.add('entered');
-  intro.classList.add('dissolve');
-  const settle = () => {
+  setTimeout(() => {
+    chapters.classList.add('entered');
+    intro.classList.add('dissolve');
+    setTimeout(() => intro.remove(), 660);
+  }, reduced ? 0 : 1150);
+  setTimeout(() => {
     chapters.classList.add('settled');
     document.body.classList.remove('locked');
-  };
-  garden.onended = settle;
-  if (reduced) settle();
-  else garden.play().catch(settle);
-  setTimeout(settle, 4400);
-  setTimeout(() => intro.remove(),650);
+  }, reduced ? 10 : 3300);
 }, {once:true});
 
 const observer = new IntersectionObserver(entries => {

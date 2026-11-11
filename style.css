@@ -30,16 +30,35 @@ main,.cinema{max-width:600px;margin-inline:auto;background:#fff9f2;box-shadow:0 
 #openLetter{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color:#63444b}
 #openLetter span{position:absolute;bottom:13%;left:0;right:0;font:500 16px Tajawal}
 .unfold .address,.unfold button,.dissolve{opacity:0}.unfold button{pointer-events:none}
-.rose-world{position:relative;height:100svh;overflow:hidden;background:#ebd9cd url('public/cinema/roses.jpg') center/cover no-repeat}
+.rose-world{position:relative;height:100svh;overflow:hidden;background:#ebd9cd url('public/art/courtyard.webp') center/cover no-repeat}
 .rose-world video{transition:opacity 1s}.settled .rose-world video{opacity:0}
 .rose-title,.continue{position:absolute;text-align:center;opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(14px)}
 .rose-title{inset:26% 0 auto;padding:20px 4px;color:#853653;background:radial-gradient(ellipse,#fff5e9ef 20%,#fff5e9aa 54%,transparent 72%)}
 .rose-title h1{font:400 clamp(60px,15vw,84px)/1.2 Amiri;margin:0}.rose-title em{font-size:.5em;font-weight:400}.continue{bottom:4%;left:50%;translate:-50% 0;border-radius:30px;background:#fff6ebec;padding:10px 20px;color:#713848;text-decoration:none;font:500 14px Tajawal}
 .settled .rose-title,.settled .continue{opacity:1;transform:none}
 .section-cream,.section-paper{background:#fff8ef}.invitation,.prayer{background:linear-gradient(#faeee5,#fffaf3)}
-.leaf-corner,.prayer:before,.prayer:after{background-image:url('public/cinema/roses.jpg');background-size:cover}.floating-sprig{color:#c1858e26}.families small,.heartfelt,.name-card .father,.countdown,.actions a{color:#714954}.actions a{background:#f9e9df;border-color:#b99688}footer{background:#693848}.section-inner{max-width:470px}.verse-text{font-size:clamp(24px,5vw,30px)}.name-card{background:#fffaf4;border-color:#d9b9a5}.name-card h2{font-size:53px}.date-row strong{font-size:57px}.music-toggle{color:#653b46;border-color:#c7a79a}.venue-card h2{font-size:36px}
+.leaf-corner,.prayer:before,.prayer:after{background-image:url('public/art/courtyard.webp');background-size:cover}.floating-sprig{color:#c1858e26}.families small,.heartfelt,.name-card .father,.countdown,.actions a{color:#714954}.actions a{background:#f9e9df;border-color:#b99688}footer{background:#693848}.section-inner{max-width:470px}.verse-text{font-size:clamp(24px,5vw,30px)}.name-card{background:#fffaf4;border-color:#d9b9a5}.name-card h2{font-size:53px}.date-row strong{font-size:57px}.music-toggle{color:#653b46;border-color:#c7a79a}.venue-card h2{font-size:36px}
 .name-card{padding:64px 20px 85px;border-radius:48% 48% 4px 4px / 14% 14% 4px 4px;overflow:hidden;box-shadow:0 12px 35px #88505218}
-.name-card::before{border-radius:inherit}.name-card::after{content:"";position:absolute;inset:auto 0 0;height:69px;background:url('public/cinema/roses.jpg') center bottom/100% auto;mask-image:linear-gradient(transparent,#000 75%);pointer-events:none}
+.name-card::before{border-radius:inherit}.name-card::after{content:"";position:absolute;inset:auto 0 0;height:69px;background:url('public/art/courtyard.webp') center bottom/100% auto;mask-image:linear-gradient(transparent,#000 75%);pointer-events:none}
 .invitation-label,.event-day,.venue-label,.name-card span:not(.ornament){color:#805463}
 .rose-world::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 75%,#fff8dc60 0,transparent 6%);animation:waterlight 2.4s ease-in-out infinite alternate}
 @keyframes waterlight{to{opacity:.2;transform:translateY(2px)}}
+.cinema{perspective:1200px;background:transparent;isolation:isolate}
+.paper-body,.paper-face{position:absolute;inset:0;background:#efe2d0 url('public/art/stationery.webp') center/cover}
+.paper-body{transition:transform 1s .58s cubic-bezier(.54,.04,.86,.5)}
+.paper-hinge{position:absolute;inset:0;transform-origin:top;filter:drop-shadow(0 7px 7px #54372855);transition:transform 1.45s cubic-bezier(.5,.01,.25,1);backface-visibility:hidden}
+.paper-face{clip-path:polygon(0 0,100% 0,100% 37%,50% 59%,0 37%);background-position:center top}
+.cinema .address{top:26%;z-index:2;color:#673e43}.address h1{margin:5px}
+#openLetter{z-index:3}.wax{position:absolute;top:57.5%;left:50%;transform:translate(-50%,-50%) rotate(-7deg);display:grid;place-items:center;width:76px;height:73px;border-radius:44% 49% 46% 53%;background:radial-gradient(ellipse at 30% 26%,#be8990,#915361 54%,#633540 77%,#b67d80 91%);border:3px solid #a76c72;box-shadow:inset 0 0 0 4px #925760,inset 1px 2px 4px 6px #cc9396,2px 6px 8px #50332655;font:27px Amiri;color:#6b3641;text-shadow:0 1px #e3a6a4}
+.unfold .paper-hinge{transform:rotateX(112deg)}.unfold .paper-body{transform:translateY(105%)}.unfold button{transition:opacity .42s}
+.rose-world{background-color:#fbecdf}.camera,.illustration,.swallows{position:absolute;inset:0;width:100%;height:100%}.camera{transform:scale(1.38);transform-origin:51% 73%}.entered .camera{transform:scale(1.015) translateY(calc(var(--scroll,0)*-.035px));transition:transform 2.8s cubic-bezier(.18,.65,.22,1)}.settled .camera{transition:none}
+.rose-title{top:26%;color:#783745;background:transparent;text-shadow:0 2px 9px #fff2e3}.rose-world:after{display:none}
+.blossoms{transform-origin:20% 0;animation:branchBreeze 7s ease-in-out infinite alternate}
+.water path{stroke-width:2;stroke-dasharray:3 19;opacity:.7;animation:streamFall 1s linear infinite}
+.swallows i{position:absolute;left:-15%;top:calc(17% + var(--i)*3%);width:calc(18px + var(--i)*3px);color:#624c4d;animation:crossSky 15s linear infinite;animation-delay:calc(var(--i)*-4s)}
+.swallows svg{width:100%;animation:wingbeat .75s ease-in-out infinite alternate}
+@keyframes branchBreeze{to{transform:rotate(.45deg) scale(1.007)}}
+@keyframes streamFall{to{stroke-dashoffset:-44}}
+@keyframes crossSky{65%,100%{left:115%;transform:translateY(-38px)}}
+@keyframes wingbeat{to{transform:scaleY(.34)}}
+@media(prefers-reduced-motion:reduce){.entered .camera{transform:none;transition:none}.paper-hinge,.paper-body{transition:none}}
