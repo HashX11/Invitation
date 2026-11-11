@@ -62,3 +62,30 @@ main,.cinema{max-width:600px;margin-inline:auto;background:#fff9f2;box-shadow:0 
 @keyframes crossSky{65%,100%{left:115%;transform:translateY(-38px)}}
 @keyframes wingbeat{to{transform:scaleY(.34)}}
 @media(prefers-reduced-motion:reduce){.entered .camera{transform:none;transition:none}.paper-hinge,.paper-body{transition:none}}
+
+/* Refined seal, readable garden title, and a continuous floral card edge. */
+#openLetter{inset:57.5% auto auto 50%;width:76px;height:73px;transform:translate(-50%,-50%);border-radius:48%;padding:0}
+#openLetter .wax{inset:0;transform:rotate(-7deg);display:flex;align-items:center;justify-content:center;gap:0;direction:rtl;padding:0 10px}
+.wax b{font:400 25px/1 Amiri,serif;display:block;flex:0 0 22px;width:22px;text-align:center;transform:translateY(-1px)}
+.wax small{font:400 15px/1 Georgia,serif;opacity:.8}
+#openPrompt{position:absolute;z-index:3;bottom:11.5%;left:50%;transform:translateX(-50%);width:max-content;max-width:88%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:12px;padding:13px 23px;border:1px solid #b78f857d;border-radius:30px;background:#fffaf1dc;box-shadow:0 5px 20px #68413715,inset 0 1px #fff9;color:#67424b;font:500 15px/1.5 Tajawal,sans-serif;transition:background .25s,box-shadow .25s,opacity .42s}
+#openPrompt span{font:400 20px/1 Georgia,serif}
+#openPrompt:hover{background:#fffaf6;box-shadow:0 7px 24px #68413725}
+#openLetter:focus-visible,#openPrompt:focus-visible{outline:2px solid #915361;outline-offset:6px}
+.camera{z-index:0}
+.rose-title{isolation:isolate;z-index:2}
+.continue{z-index:3}
+.rose-title::before{content:"";position:absolute;z-index:-1;inset:-20px 4%;border-radius:38%;background:rgba(255,255,255,.52);mask-image:radial-gradient(ellipse at center,#000 35%,#000a 61%,transparent 75%);pointer-events:none}
+.invitation{padding-bottom:20px}
+.countdown>div{direction:ltr}
+.countdown small{direction:rtl}
+.roses{transform-origin:50% 100%;animation:roseBreeze 6.5s ease-in-out infinite alternate}
+.garden-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.garden-drift i{position:absolute;left:calc(9% + var(--n)*13%);top:-8%;width:9px;height:16px;border-radius:95% 0 95% 0;background:linear-gradient(135deg,#a6ad6d,#6e7e4f);opacity:0;animation:gardenDrift calc(15s + var(--n)*1.3s) linear infinite;animation-delay:calc(var(--n)*-3.7s)}
+.garden-drift i:nth-child(even){width:10px;height:13px;border-radius:75% 15% 65% 35%;background:linear-gradient(135deg,#f4c8c9,#c88090)}
+.swallows i:nth-child(4){top:14%;animation-duration:22s;opacity:.65}
+.swallows i:nth-child(5){top:23%;animation-duration:19s;opacity:.55}
+@keyframes roseBreeze{from{transform:rotate(-.25deg) scale(1.008)}to{transform:rotate(.3deg) scale(1.012)}}
+@keyframes gardenDrift{0%{transform:translate3d(0,0,0) rotate(0);opacity:0}10%{opacity:.55}45%{transform:translate3d(-24px,46svh,0) rotate(140deg);opacity:.4}80%{opacity:.5}100%{transform:translate3d(38px,110svh,0) rotate(310deg);opacity:0}}
+@media(max-width:650px){.invitation{padding-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.garden-drift{display:none}.roses{animation:none}}

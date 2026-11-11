@@ -14,7 +14,8 @@ musicToggle.addEventListener('click', () => {
   else audio.pause();
 });
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.querySelector('#openLetter').addEventListener('click', () => {
+function openInvitation() {
+  if (intro.classList.contains('unfold')) return;
   audio.play().catch(() => setMusicState(false));
   intro.classList.add('unfold');
   chapters.removeAttribute('inert');
@@ -28,7 +29,10 @@ document.querySelector('#openLetter').addEventListener('click', () => {
     chapters.classList.add('settled');
     document.body.classList.remove('locked');
   }, reduced ? 10 : 3300);
-}, {once:true});
+}
+document.querySelectorAll('#openLetter, #openPrompt').forEach(button => {
+  button.addEventListener('click', openInvitation, {once:true});
+});
 
 const observer = new IntersectionObserver(entries => {
   for (const entry of entries) {
